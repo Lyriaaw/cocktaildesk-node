@@ -1,22 +1,16 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.buildIngredients = exports.composeSentence = exports.search = undefined;
+exports.findRecipe = exports.buildIngredients = exports.composeSentence = exports.search = undefined;
 
-var _api = require('./api');
+var _api = require("./api");
 
 function composeSentence(recipe) {
-  console.log('Coposing sentence for', recipe);
-
-  var recipeText = "Voici la recette du " + recipe.name + ": ";
-
+  var recipeText = "Pour faire un " + recipe.name + ", ";
   recipeText += buildIngredients(recipe.quantity);
-
   recipeText += recipe.recipe;
-
-  console.log('Recipe text : ', recipeText);
   return recipeText;
 }
 
@@ -50,12 +44,12 @@ function search(cocktail) {
   });
 }
 
-function find_recipe(name) {
+function findRecipe(name) {
   return new Promise(function (r, re) {
     search(name).then(function (response) {
       return r(composeSentence(response));
     }).catch(function (error) {
-      return re(error);
+      return r("Je ne connais pas le cocktail " + name);
     });
   });
 }
@@ -63,3 +57,4 @@ function find_recipe(name) {
 exports.search = search;
 exports.composeSentence = composeSentence;
 exports.buildIngredients = buildIngredients;
+exports.findRecipe = findRecipe;

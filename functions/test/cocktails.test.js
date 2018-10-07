@@ -9,7 +9,7 @@ import {
 describe('Cocktails', () => {
   it('Cocktail with schweppes should return Montélimard in first place', async () => {
     const result = await search('schweppes');
-    assert.equal(result[0].name, "Montélimard");
+    assert.equal(result[0].name, "Montelimard");
   });
 
   it('Cocktail with schweppes should return a string', async () => {
@@ -30,6 +30,6 @@ describe('Cocktails', () => {
 
   it('Should find nothing', async () => {
     const foundSentence = await advise('fzekjfhvzekjzhef');
-    assert.equal(foundSentence, "Je n'ai pas trouvé de cocktail pour vous");
+    assert.equal(foundSentence, "Je n'ai pas trouvé de recette avec du fzekjfhvzekjzhef");
   });
 });

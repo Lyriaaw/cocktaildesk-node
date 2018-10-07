@@ -3,6 +3,7 @@
 const functions = require('firebase-functions');
 const { dialogflow } = require('actions-on-google');
 const  { advise } = require('./lib/cocktails');
+const { findRecipe } = require('./lib/recipes');
 
 
 // // Create and Deploy Your First Cloud Functions
@@ -29,7 +30,18 @@ app.intent('search_cocktail', (conv, {drink}) => {
 });
 
 app.intent('get_recipe', (conv, {cocktail}) => {
-  conv.ask('Ah, tu veux une recette !!');
+  console.log('Asking for a recipe of ' + cocktail);
+
+  return new Promise((r, re) => {
+    findRecipe(cocktail).then(response => {
+      console.log('Found recipe : ' + response);
+      conv.ask(response);
+      return r();
+    }).catch(error => {
+      conv.ask('Error');
+      return r();
+    });
+  });
 });
 
 

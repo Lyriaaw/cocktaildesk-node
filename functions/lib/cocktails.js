@@ -15,7 +15,7 @@ var advise = function advise(drink) {
     search(drink).then(function (response) {
       return r(buildCocktailSentence(response));
     }).catch(function (error) {
-      return re(error);
+      return r("Je n'ai pas trouvé de recette avec du " + drink);
     });
   });
 };
@@ -52,7 +52,7 @@ function search(drink) {
     (0, _api.get)('/drink?name=' + drink).then(function (response) {
       return r(response.data);
     }).catch(function (error) {
-      return re(new Error('No cocktail found'));
+      return r(new Error('No cocktail found'));
     });
   });
 }

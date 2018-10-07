@@ -14,7 +14,7 @@ const advise = (drink: string): Promise<string> => {
     search(drink).then(response => {
       return r(buildCocktailSentence(response))
     }).catch(error => {
-      return re(error);
+      return r("Je n'ai pas trouvé de recette avec du " + drink);
     });
 
   });
@@ -53,7 +53,7 @@ function search(drink: string): Promise<Array<{name: string}>> {
     get('/drink?name=' + drink).then(response => {
       return r(response.data);
     }).catch(error => {
-      return re(new Error('No cocktail found'));
+      return r(new Error('No cocktail found'));
     });
   });
 }

@@ -2,15 +2,9 @@
 import { get } from './api';
 
 function composeSentence(recipe: Object): string {
-  console.log('Coposing sentence for', recipe);
-
-  let recipeText: string = "Voici la recette du " + recipe.name + ": ";
-
+  let recipeText: string = "Pour faire un " + recipe.name + ", ";
   recipeText += buildIngredients(recipe.quantity);
-
   recipeText += recipe.recipe;
-
-  console.log('Recipe text : ', recipeText);
   return recipeText;
 }
 
@@ -43,12 +37,12 @@ function search(cocktail: string): Promise<Object> {
   });
 }
 
-function find_recipe(name: string): Promise<string> {
+function findRecipe(name: string): Promise<string> {
   return new Promise((r, re) => {
-    search(name).then((response) => {
+    search(name).then((response: Object) => {
       return r(composeSentence(response))
     }).catch(error => {
-      return re(error);
+      return r("Je ne connais pas le cocktail " + name);
     });
   });
 }
@@ -58,4 +52,5 @@ export {
   search,
   composeSentence,
   buildIngredients,
+  findRecipe,
  };

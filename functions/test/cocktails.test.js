@@ -14,7 +14,7 @@ describe('Cocktails', () => {
 
   it('Cocktail with schweppes should return a string', async () => {
     const result = await advise('schweppes');
-    assert.equal(typeof result, "string");
+    assert.equal(typeof result, 'string');
   });
 
   it('Should give random index inside the array of sentences', () => {
@@ -25,11 +25,11 @@ describe('Cocktails', () => {
 
   it('Should return a string', async () => {
     const foundSentence = await advise('schweppes');
-    assert(typeof foundSentence == "string");
+    assert.equal(typeof foundSentence, 'string');
   });
 
   it('Should find nothing', async () => {
     const foundSentence = await advise('fzekjfhvzekjzhef');
-    assert.equal(foundSentence, "Je n'ai pas trouvé de recette avec du fzekjfhvzekjzhef");
+    assert.equal(foundSentence, 'Je n\'ai pas trouvé de recette avec du fzekjfhvzekjzhef');
   });
 });

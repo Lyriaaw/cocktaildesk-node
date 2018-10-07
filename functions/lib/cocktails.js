@@ -7,45 +7,16 @@ exports.advise = exports.sentences = exports.findRandomIndex = exports.search = 
 
 var _api = require('./api');
 
-var sentences = [{ sentence: "Je peux vous proposer ##.", pronoun: 'le', linker: 'et' }, { sentence: "## devraient vous plaire.", pronoun: 'le', linker: 'ou' }, { sentence: "Je pense ##.", pronoun: 'au', linker: 'ou' }, { sentence: "Que diriez-vous ## ?", pronoun: 'du', linker: 'ou' }];
-
-
-var advise = function advise(drink) {
+function advise(drink) {
   return new Promise(function (r, re) {
     search(drink).then(function (response) {
       return r(buildCocktailSentence(response));
     }).catch(function (error) {
-      return r("Je n'ai pas trouvé de recette avec du " + drink);
+      return r('Je n\'ai pas trouv\xE9 de recette avec du ' + drink);
     });
   });
-};
-
-function findRandomIndex() {
-  return Math.floor(Math.random() * sentences.length);
 }
 
-function buildCocktailSentence(cocktails) {
-  var sentence = sentences[findRandomIndex()];
-
-  var cocktailsString = "";
-
-  cocktails.forEach(function (cocktail, index) {
-    cocktailsString += sentence.pronoun + ' ' + cocktail.name;
-
-    if (index !== cocktails.length - 1) {
-      if (index === cocktails.length - 2) {
-        cocktailsString += ' ' + sentence.linker + ' ';
-      } else {
-        cocktailsString += ', ';
-      }
-    }
-  });
-
-  var builtSentence = sentence.sentence.replace('##', cocktailsString);
-  builtSentence = builtSentence.charAt(0).toUpperCase() + builtSentence.substr(1);
-
-  return builtSentence;
-}
 
 function search(drink) {
   return new Promise(function (r, re) {
@@ -55,6 +26,34 @@ function search(drink) {
       re(new Error('No cocktail found'));
     });
   });
+}
+
+var sentences = [{ sentence: 'Je peux vous proposer ##.', pronoun: 'le', linker: 'et' }, { sentence: '## devraient vous plaire.', pronoun: 'le', linker: 'ou' }, { sentence: 'Je pense ##.', pronoun: 'au', linker: 'ou' }, { sentence: 'Que diriez-vous ## ?', pronoun: 'du', linker: 'ou' }];
+
+function buildCocktailSentence(cocktails) {
+  var sentence = sentences[findRandomIndex()];
+  var cocktailsString = "";
+
+  cocktails.forEach(function (cocktail, index) {
+    cocktailsString += sentence.pronoun + ' ' + cocktail.name;
+
+    // Nothing at the end of the list
+    if (index !== cocktails.length - 1) {
+      // Linker word for the before last, comma for everything else
+      cocktailsString += index === cocktails.length - 2 ? ' ' + sentence.linker + ' ' : ', ';
+    }
+  });
+
+  var builtSentence = sentence.sentence.replace('##', cocktailsString);
+
+  // Let's respect some basic human language rules
+  builtSentence = builtSentence.charAt(0).toUpperCase() + builtSentence.substr(1);
+
+  return builtSentence;
+}
+
+function findRandomIndex() {
+  return Math.floor(Math.random() * sentences.length);
 }
 
 exports.search = search;

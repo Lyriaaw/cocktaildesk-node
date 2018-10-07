@@ -25,12 +25,12 @@ describe('Recipes', () => {
 
   it('Should build ingredients with \'et\'', async () => {
     const recipe = await search('Jager bomb');
-    assert.equal(buildIngredients(recipe.quantity), 'il vous faut 4 cl de Jagermeister et 6 cl de Redbull. ');
+    assert.equal(buildIngredients(recipe.quantity), 'il vous faut 4 cl de jagermeister et 6 cl de redbull. ');
   });
 
   it('Should build ingredients with \',\'', async () => {
-    const recipe = await search('Montelimard');
-    assert.equal(buildIngredients(recipe.quantity), 'il vous faut 5 cl de Gin, 5 cl de Schweppes et 0.1 cl de Jus de citron. ');
+    const recipe = await search('Gin Tonic');
+    assert.equal(buildIngredients(recipe.quantity), 'il vous faut 5 cl de gin, 5 cl de schweppes et 1 cl de jus de citron. ');
   });
 
   it('Should return a string', async () => {
@@ -40,7 +40,7 @@ describe('Recipes', () => {
 
   it ('Should return a complete recipe', async () => {
     const recipe = await findRecipe('Jager bomb');
-    assert.equal(recipe, 'Pour faire un Jager bomb, il vous faut 4 cl de Jagermeister et 6 cl de Redbull. Versez le Jager, Placez une bombe, Dégustez');
+    assert.equal(recipe, 'Pour faire un Jager bomb, il vous faut 4 cl de jagermeister et 6 cl de redbull. Versez le Jager, Placez une bombe, Dégustez');
   });
 
   it('Should not found any cocktail', async () => {

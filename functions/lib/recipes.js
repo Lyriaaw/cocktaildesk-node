@@ -1,38 +1,22 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.findRecipe = exports.buildIngredients = exports.composeSentence = exports.search = undefined;
 
-var _api = require("./api");
+var _api = require('./api');
 
-function composeSentence(recipe) {
-  var recipeText = "Pour faire un " + recipe.name + ", ";
-  recipeText += buildIngredients(recipe.quantity);
-  recipeText += recipe.recipe;
-  return recipeText;
-}
-
-
-function buildIngredients(quantities) {
-  var recipeText = "il vous faut ";
-
-  quantities.forEach(function (quantity, index) {
-    recipeText += quantity.quantity + " " + quantity.unit;
-    recipeText += " de " + quantity.drink.name;
-
-    if (index !== quantities.length - 1) {
-      if (index === quantities.length - 2) {
-        recipeText += " et ";
-      } else {
-        recipeText += ', ';
-      }
-    }
+function findRecipe(name) {
+  return new Promise(function (r, re) {
+    search(name).then(function (response) {
+      return r(composeSentence(response));
+    }).catch(function (error) {
+      return r('Je ne connais pas le cocktail ' + name);
+    });
   });
-  recipeText += ". ";
-  return recipeText;
 }
+
 
 function search(cocktail) {
   return new Promise(function (r, re) {
@@ -44,14 +28,28 @@ function search(cocktail) {
   });
 }
 
-function findRecipe(name) {
-  return new Promise(function (r, re) {
-    search(name).then(function (response) {
-      return r(composeSentence(response));
-    }).catch(function (error) {
-      return r("Je ne connais pas le cocktail " + name);
-    });
+function composeSentence(recipe) {
+  var recipeText = 'Pour faire un ' + recipe.name + ', ';
+  recipeText += buildIngredients(recipe.quantity);
+  recipeText += recipe.recipe;
+  return recipeText;
+}
+
+function buildIngredients(quantities) {
+  var recipeText = 'il vous faut ';
+
+  quantities.forEach(function (quantity, index) {
+    recipeText += quantity.quantity + ' ' + quantity.unit + ' de ' + quantity.drink.name;
+
+    // Nothing at the end of the list
+    if (index !== quantities.length - 1) {
+      // Linker word for the before last, comma for everything else
+      recipeText += index === quantities.length - 2 ? ' et ' : ', ';
+    }
   });
+
+  recipeText += '. ';
+  return recipeText;
 }
 
 exports.search = search;

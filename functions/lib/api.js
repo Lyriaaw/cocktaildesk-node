@@ -11,8 +11,7 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const API_URL: string = "https://3d4d270d.ngrok.io";
-var API_URL = "http://127.0.0.1:3000";
+var API_URL = "https://cocktaildesk-back.herokuapp.com";
 
 
 var get = function get(uri) {

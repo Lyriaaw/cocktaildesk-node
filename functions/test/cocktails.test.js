@@ -7,9 +7,9 @@ import {
  } from '../src/cocktails';
 
 describe('Cocktails', () => {
-  it('Cocktail with schweppes should return Montélimard in first place', async () => {
+  it('Cocktail with schweppes should return Montélimard in second place', async () => {
     const result = await search('schweppes');
-    assert.equal(result[0].name, "Montelimard");
+    assert.equal(result[1].name, "Montelimard");
   });
 
   it('Cocktail with schweppes should return a string', async () => {

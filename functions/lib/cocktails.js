@@ -52,7 +52,7 @@ function search(drink) {
     (0, _api.get)('/drink?name=' + drink).then(function (response) {
       return r(response.data);
     }).catch(function (error) {
-      return r(new Error('No cocktail found'));
+      re(new Error('No cocktail found'));
     });
   });
 }

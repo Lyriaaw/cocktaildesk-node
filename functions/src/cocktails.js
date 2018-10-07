@@ -53,7 +53,7 @@ function search(drink: string): Promise<Array<{name: string}>> {
     get('/drink?name=' + drink).then(response => {
       return r(response.data);
     }).catch(error => {
-      return r(new Error('No cocktail found'));
+      re(new Error('No cocktail found'));
     });
   });
 }

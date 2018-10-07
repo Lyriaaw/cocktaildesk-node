@@ -38,14 +38,15 @@ describe('Recipes', () => {
     assert.equal(typeof composeSentence(recipe), "string");
   });
 
-  // it('Should throw an error', async () => {
-  //   const response = await search('fzekjfhvzekjzhef');
-  //   console.log('Error ? ', response);
-  //   assert.throws(response, Error, "No cocktail found");
-  // });
+  it ('Should return a complete recipe', async () => {
+    const recipe = await findRecipe('Jager bomb');
+    assert.equal(recipe, 'Pour faire un Jager bomb, il vous faut 4 cl de Jagermeister et 6 cl de Redbull. Vers le Jager, Placez une bombe, Dégustez')
+  });
 
   it('Should not found any cocktail', async () => {
     const recipe = await findRecipe('fezkjhbzef');
     assert.equal(recipe, "Je ne connais pas le cocktail fezkjhbzef");
   });
+
+
 });

@@ -32,7 +32,7 @@ function search(cocktail: string): Promise<Object> {
     get('/recipe?name=' + cocktail).then(response => {
       return r(response.data);
     }).catch(error => {
-      return re(new Error('No cocktail found'));
+      re(new Error('No cocktail found'));
     });
   });
 }

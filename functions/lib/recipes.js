@@ -39,7 +39,7 @@ function search(cocktail) {
     (0, _api.get)('/recipe?name=' + cocktail).then(function (response) {
       return r(response.data);
     }).catch(function (error) {
-      return re(new Error('No cocktail found'));
+      re(new Error('No cocktail found'));
     });
   });
 }
